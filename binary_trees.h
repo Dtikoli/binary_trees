@@ -76,15 +76,15 @@ int heap_extract(heap_t **root);
 int *heap_to_sorted_array(heap_t *heap, size_t *size);
 
 /* Utility functions */
-int power_recursion(int x, int y);
-binary_tree_t *bta_helper(binary_tree_t *root, const binary_tree_t *first,
-			  const binary_tree_t *second);
-void level_order(const binary_tree_t *tree, void (*func)(int), size_t level);
-int is_complete(const binary_tree_t *tree, size_t index, size_t size);
-int btib_helper(const binary_tree_t *tree, int low, int hi);
-bst_t *bst_min_val(bst_t *root);
-int btia_helper(const binary_tree_t *tree, int low, int hi);
-int btih_helper(const binary_tree_t *tree);
-void sata_helper(avl_t **root, int *array, size_t lo, size_t hi);
+int power_recursion(int, int);
+binary_tree_t *bta_helper(binary_tree_t *, const binary_tree_t *,
+			  const binary_tree_t *);
+void level_order(const binary_tree_t *, void (*func)(int), size_t);
+int is_complete(const binary_tree_t *, size_t, size_t);
+int valid_search(const binary_tree_t *, int, int);
+bst_t *bst_min_val(bst_t *);
+int btia_helper(const binary_tree_t *, int, int);
+int btih_helper(const binary_tree_t *);
+void sata_helper(avl_t **root, int *, size_t, size_t);
 
 #endif /* _BINARY_TREES_H_ */
