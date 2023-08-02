@@ -82,7 +82,7 @@ binary_tree_t *bta_helper(binary_tree_t *, const binary_tree_t *,
 void level_order(const binary_tree_t *, void (*func)(int), size_t);
 int is_complete(const binary_tree_t *, size_t, size_t);
 int valid_search(const binary_tree_t *, int, int);
-bst_t *bst_min_val(bst_t *);
+bst_t *min_value(bst_t *);
 int btia_helper(const binary_tree_t *, int, int);
 int btih_helper(const binary_tree_t *);
 void sata_helper(avl_t **root, int *, size_t, size_t);
