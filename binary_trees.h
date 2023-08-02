@@ -85,7 +85,7 @@ int valid_search(const binary_tree_t *, int, int);
 int binary_tree_is_leaf(const binary_tree_t *);
 bst_t *right_left_case(bst_t *, bst_t *);
 bst_t *right_case(bst_t *, bst_t *);
-int btia_helper(const binary_tree_t *, int, int);
+int valid_avl(const binary_tree_t *, int, int);
 int btih_helper(const binary_tree_t *);
 void sata_helper(avl_t **root, int *, size_t, size_t);
 
