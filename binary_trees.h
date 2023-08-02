@@ -86,6 +86,6 @@ bst_t *right_case(bst_t *, bst_t *);
 int valid_avl(const binary_tree_t *, int, int);
 avl_t *right_insert(avl_t **, avl_t *, avl_t **, int);
 void array_sort(avl_t **root, int *, size_t, size_t);
-int btih_helper(const binary_tree_t *);
+int valid_mbh(const binary_tree_t *);
 
 #endif /* _BINARY_TREES_H_ */
