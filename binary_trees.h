@@ -86,6 +86,7 @@ int binary_tree_is_leaf(const binary_tree_t *);
 bst_t *right_left_case(bst_t *, bst_t *);
 bst_t *right_case(bst_t *, bst_t *);
 int valid_avl(const binary_tree_t *, int, int);
+avl_t *right_insert(avl_t **, avl_t *, avl_t **, int);
 int btih_helper(const binary_tree_t *);
 void sata_helper(avl_t **root, int *, size_t, size_t);
 
