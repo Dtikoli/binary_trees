@@ -8,7 +8,7 @@
  */
 avl_t *array_to_avl(int *array, size_t size)
 {
-	size_t i;
+	unsigned int i;
 	avl_t *root = NULL;
 
 	for (i = 0; i < size; i++)
