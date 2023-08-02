@@ -9,86 +9,132 @@
  */
 bst_t *bst_remove(bst_t *root, int value)
 {
-	bst_t *del_node, *new_node = NULL, *new_root;
-	int status = 0; /* 1 if right, 0 if left */
+	bst_t *node;
 
-	if (!root)
-		return (NULL);
+	node = bst_search(root, value);
 
-	del_node = search_val(root, value);
-	if (!del_node)
-		return (NULL);
-
-	if (del_node->right)
+	if (node)
 	{
-		new_node = del_node->right, status = 1;
-		while (new_node->left)
-			new_node = new_node->left;
-	}
-	else if (del_node->left)
-		new_node = del_node->left;
-	if (!new_node)
-	{
-		if (del_node->parent->left->n == del_node->n)
-			del_node->parent->left = NULL;
+		if (binary_tree_is_leaf(node) == 1)
+		{
+			if (node == node->parent->left)
+				node->parent->left = NULL;
+			if (node == node->parent->right)
+				node->parent->right = NULL;
+			free(node);
+			return (root);
+		}
+		if (node->right && node->right->left)
+			root = right_left_case(node, root);
+		else if (node->right)
+			root = right_case(node, root);
 		else
-			del_node->parent->right = NULL;
-		new_root = find_root(del_node);
-		free(del_node);
+		{
+			if (node->parent)
+				node->parent->right = node->left;
+			node->left->parent = node->parent;
+			if (root == node)
+				root = node->left;
+			free(node);
+		}
 	}
-	else if (status == 1)
-	{
-		del_node->n = new_node->n;
-		new_root = find_root(new_node);
-		if (new_node->parent->left->n == new_node->n)
-			new_node->parent->left = NULL;
-		else
-			new_node->parent->right = NULL;
-		free(new_node);
-	}
-	else
-	{
-		del_node->n = new_node->n;
-		del_node->left = del_node->left->left;
-		if (del_node->left)
-			del_node->left->parent = del_node;
-		new_root = find_root(del_node);
-		free(new_node);
-	}
-	return (new_root);
+	return (root);
 }
 
 /**
- * search_val - Search for a value in a Binary Search Tree
- * @tree: pointer to root node of BST
- * @value: value to look for 9bst_t *bst_search(const bst_t *tree, int value)
- * Return: pointer to node containing value, else NULL
+ * binary_tree_is_leaf - checks if a node is a leaf
+ * @node: pointer to the node to check
+ * Return: 1 if node is a leaf, otherwise 0
  */
-bst_t *search_val(const bst_t *tree, int value)
+int binary_tree_is_leaf(const binary_tree_t *node)
 {
-	if (tree == NULL)
-		return (NULL);
-	if (tree->n == value)
-		return ((bst_t *)tree);
+	int leaf = 0;
 
-	if (value < tree->n)
-		return (search_val(tree->left, value));
-	else
-		return (search_val(tree->right, value));
+	if (node && !(node->left) && !(node->right))
+		leaf = 1;
+
+	return (leaf);
 }
 
 /**
- * find_root - find the root of a Binary Search Tree
- * @node: node in a BST
- * Return: pointer to root node, else NULL
+ * bst_search - searches for a value in a BST
+ * @tree: pointer to the root node of the BST to search
+ * @value: the value to search in the tree
+ * Return: pointer to the node containing an int equal to `value`
+ *         NULL if tree is NULL or if no match is found
  */
-bst_t *find_root(bst_t *node)
+bst_t *bst_search(const bst_t *tree, int value)
 {
-	if (node == NULL)
+	bst_t *snode = (bst_t *)tree;
+
+	if (!tree)
 		return (NULL);
 
-	while (node->parent)
-		node = node->parent;
+	while (snode)
+	{
+		if (value == snode->n)
+			return (snode);
+		if (value < snode->n)
+			snode = snode->left;
+		else if (value > snode->n)
+			snode = snode->right;
+	}
 
-	return (node);
+	return (NULL);
 }
+
+/**
+ * right_case - removes a node from a BST for node->right
+ * @root: tree root
+ * @node: node to delete
+ * Return: pointer the tree root
+ */
+bst_t *right_case(bst_t *node, bst_t *root)
+{
+	node->right->left = node->left;
+	node->right->parent = node->parent;
+	if (node->parent)
+	{
+		if (node == node->parent->left)
+			node->parent->left = node->right;
+		if (node == node->parent->right)
+			node->parent->right = node->right;
+	}
+	if (node->left)
+		node->left->parent = node->right;
+	if (root == node)
+		root = node->right;
+	free(node);
+
+	return (root);
+}
+
+/**
+ * right_left_case - removes a node from a BST for node->right->left
+ * @root: tree root
+ * @node: node to delete
+ * Return: pointer the tree root
+ */
+bst_t *right_left_case(bst_t *node, bst_t *root)
+{
+	node->right->left->right = node->right;
+	node->right->left->parent = node->parent;
+	node->right->left->left = node->left;
+	if (node->left)
+		node->left->parent = node->right->left;
+	node->right->parent = node->right->left;
+	if (root == node)
+		root = node->right->left;
+	else
+	{
+		if (node == node->parent->left)
+			node->parent->left = node->right->left;
+		if (node == node->parent->right)
+			node->parent->right = node->right->left;
+	}
+	node->right->left = NULL;
+	free(node);
+
+	return (root);
+}
+
