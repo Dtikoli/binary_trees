@@ -77,8 +77,6 @@ int *heap_to_sorted_array(heap_t *heap, size_t *size);
 
 /* Utility functions */
 int power_recursion(int, int);
-binary_tree_t *bta_helper(binary_tree_t *, const binary_tree_t *,
-			  const binary_tree_t *);
 void level_order(const binary_tree_t *, void (*func)(int), size_t);
 int is_complete(const binary_tree_t *, size_t, size_t);
 int valid_search(const binary_tree_t *, int, int);
@@ -87,7 +85,7 @@ bst_t *right_left_case(bst_t *, bst_t *);
 bst_t *right_case(bst_t *, bst_t *);
 int valid_avl(const binary_tree_t *, int, int);
 avl_t *right_insert(avl_t **, avl_t *, avl_t **, int);
+void array_sort(avl_t **root, int *, size_t, size_t);
 int btih_helper(const binary_tree_t *);
-void sata_helper(avl_t **root, int *, size_t, size_t);
 
 #endif /* _BINARY_TREES_H_ */
